@@ -10,3 +10,20 @@ body {
     min-height: 100vh;
     padding: 20px;
 }
+
+.app-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(112, 41, 99, 0.2);
+}
+
+.app-title {
+    text-align: center;
+    color: #702963;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(112, 41, 99, 0.1);
+}
