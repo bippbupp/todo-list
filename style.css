@@ -189,7 +189,6 @@ body {
     font-weight: 500;
 }
 
-/* Кнопки действий */
 .todo-actions {
     display: flex;
     gap: 8px;
@@ -223,4 +222,63 @@ body {
 .delete-btn:hover {
     background-color: #FF6666;
     color: white;
+}
+
+@media (max-width: 768px) {
+    .app-container {
+        padding: 20px;
+    }
+    
+    .app-title {
+        font-size: 2rem;
+    }
+    
+    .todo-form {
+        flex-direction: column;
+    }
+    
+    .task-input,
+    .date-input {
+        min-width: 100%;
+    }
+    
+    .add-button {
+        width: 100%;
+    }
+    
+    .todo-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .todo-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    .app-container {
+        padding: 15px;
+        border-radius: 15px;
+    }
+    
+    .app-title {
+        font-size: 1.75rem;
+        margin-bottom: 20px;
+    }
+    
+    .filter-container {
+        flex-direction: column;
+    }
+    
+    .filter-btn,
+    .sort-btn {
+        width: 100%;
+    }
 }
