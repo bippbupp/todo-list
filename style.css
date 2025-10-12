@@ -72,3 +72,54 @@ body {
 .add-button:active {
     transform: translateY(0);
 }
+
+.control-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #CCCCFF;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #7575CF;
+}
+
+.filter-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-btn,
+.sort-btn {
+    padding: 10px 20px;
+    background-color: #E4ECF6;
+    color: #5453A6;
+    border: 2px solid #CCCCFF;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.filter-btn:hover,
+.sort-btn:hover {
+    background-color: #CCCCFF;
+    border-color: #7575CF;
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, #8F99FB 0%, #5453A6 100%);
+    color: white;
+    border-color: #5453A6;
+}
