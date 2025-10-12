@@ -17,15 +17,15 @@ body {
     background-color: #fff;
     border-radius: 20px;
     padding: 30px;
-    box-shadow: 0 10px 30px rgba(112, 41, 99, 0.2);
+    box-shadow: 0 10px 30px rgba(84, 83, 166, 0.2);
 }
 
 .app-title {
     text-align: center;
-    color: #702963;
+    color: #5453A6;
     font-size: 2.5rem;
     margin-bottom: 30px;
-    text-shadow: 2px 2px 4px rgba(112, 41, 99, 0.1);
+    text-shadow: 2px 2px 4px rgba(84, 83, 166, 0.1);
 }
 
 .todo-form {
@@ -40,7 +40,7 @@ body {
     flex: 1;
     min-width: 200px;
     padding: 12px 15px;
-    border: 2px solid #D8BFD8;
+    border: 2px solid #CCCCFF;
     border-radius: 10px;
     font-size: 1rem;
     transition: border-color 0.3s;
@@ -49,12 +49,12 @@ body {
 .task-input:focus,
 .date-input:focus {
     outline: none;
-    border-color: #967BB6;
+    border-color: #7575CF;
 }
 
 .add-button {
     padding: 12px 25px;
-    background: linear-gradient(135deg, #967BB6 0%, #702963 100%);
+    background: linear-gradient(135deg, #8F99FB 0%, #5453A6 100%);
     color: white;
     border: none;
     border-radius: 10px;
@@ -66,7 +66,7 @@ body {
 
 .add-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(112, 41, 99, 0.3);
+    box-shadow: 0 5px 15px rgba(84, 83, 166, 0.3);
 }
 
 .add-button:active {
