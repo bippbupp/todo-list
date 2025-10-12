@@ -123,3 +123,42 @@ body {
     color: white;
     border-color: #5453A6;
 }
+
+.todo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: #F8F4FF;
+    border: 2px solid #E6E6FA;
+    border-radius: 10px;
+    transition: all 0.3s;
+    cursor: grab;
+}
+
+.todo-item:hover {
+    border-color: #967BB6;
+    box-shadow: 0 3px 10px rgba(112, 41, 99, 0.15);
+}
+
+.todo-item.dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+}
+
+.todo-item.completed {
+    background-color: #E6E6FA;
+    opacity: 0.7;
+}
+
+.todo-item.completed .todo-text {
+    text-decoration: line-through;
+    color: #967BB6;
+}
