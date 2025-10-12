@@ -27,3 +27,48 @@ body {
     margin-bottom: 30px;
     text-shadow: 2px 2px 4px rgba(112, 41, 99, 0.1);
 }
+
+.todo-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.task-input,
+.date-input {
+    flex: 1;
+    min-width: 200px;
+    padding: 12px 15px;
+    border: 2px solid #D8BFD8;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.task-input:focus,
+.date-input:focus {
+    outline: none;
+    border-color: #967BB6;
+}
+
+.add-button {
+    padding: 12px 25px;
+    background: linear-gradient(135deg, #967BB6 0%, #702963 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.add-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(112, 41, 99, 0.3);
+}
+
+.add-button:active {
+    transform: translateY(0);
+}
