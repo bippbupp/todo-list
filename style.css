@@ -162,3 +162,65 @@ body {
     text-decoration: line-through;
     color: #7575CF;
 }
+
+.todo-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.todo-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #5453A6;
+}
+
+.todo-text {
+    font-size: 1rem;
+    color: #333;
+    flex: 1;
+}
+
+.todo-date {
+    font-size: 0.9rem;
+    color: #7575CF;
+    font-weight: 500;
+}
+
+/* Кнопки действий */
+.todo-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.edit-btn,
+.delete-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.edit-btn {
+    background-color: #B9BFFF;
+    color: #5453A6;
+}
+
+.edit-btn:hover {
+    background-color: #8F99FB;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #FFCCCC;
+    color: #CC0000;
+}
+
+.delete-btn:hover {
+    background-color: #FF6666;
+    color: white;
+}
