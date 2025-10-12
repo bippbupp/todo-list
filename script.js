@@ -70,4 +70,55 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.append(appContainer);
     
     console.log('Структура страницы создана!');
+
+    function createTodoItem(text, date, isCompleted) {
+        const todoItem = document.createElement('li');
+        todoItem.className = 'todo-item';
+        if (isCompleted) {
+            todoItem.classList.add('completed');
+        }
+        
+        const todoContent = document.createElement('div');
+        todoContent.className = 'todo-content';
+        
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.className = 'todo-checkbox';
+        checkbox.checked = isCompleted;
+        
+        const todoText = document.createElement('span');
+        todoText.className = 'todo-text';
+        todoText.textContent = text;
+        
+        const todoDate = document.createElement('span');
+        todoDate.className = 'todo-date';
+        todoDate.textContent = date;
+        
+        todoContent.append(checkbox, todoText, todoDate);
+        
+        const todoActions = document.createElement('div');
+        todoActions.className = 'todo-actions';
+        
+        const editBtn = document.createElement('button');
+        editBtn.className = 'edit-btn';
+        editBtn.textContent = 'Редактировать';
+        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.textContent = 'Удалить';
+        
+        todoActions.append(editBtn, deleteBtn);
+        
+        todoItem.append(todoContent, todoActions);
+        
+        return todoItem;
+    }
+    
+    todoList.append(createTodoItem('Купить продукты в магазине', '15.10.2025', false));
+    todoList.append(createTodoItem('Написать отчет по проекту', '14.10.2025', false));
+    todoList.append(createTodoItem('Позвонить врачу', '13.10.2025', true));
+    todoList.append(createTodoItem('Подготовиться к презентации', '16.10.2025', false));
+    todoList.append(createTodoItem('Сделать домашнее задание', '12.10.2025', true));
+    
+    console.log('Тестовые задачи добавлены!');
 });
