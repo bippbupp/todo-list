@@ -137,6 +137,37 @@ document.addEventListener('DOMContentLoaded', function() {
         { id: 4, text: 'Подготовиться к презентации', date: '16.10.2025', completed: false },
         { id: 5, text: 'Сделать домашнее задание', date: '12.10.2025', completed: true }
     ];
+
+    let nextId = 6;
+    
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const taskText = taskInput.value.trim();
+        const taskDate = dateInput.value;
+        
+        if (taskText === '' || taskDate === '') {
+            alert('Пожалуйста, заполните все поля!');
+            return;
+        }
+        
+        const newTodo = {
+            id: nextId++,
+            text: taskText,
+            date: taskDate.split('-').reverse().join('.'),
+            completed: false
+        };
+        
+        todos.push(newTodo);
+        
+        taskInput.value = '';
+        dateInput.value = '';
+        
+        renderTodos();
+        
+        console.log('Добавлена новая задача:', newTodo);
+        console.log('Всего задач:', todos.length);
+    });
     
     renderTodos();
     
