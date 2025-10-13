@@ -71,10 +71,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('Структура страницы создана!');
 
-    function createTodoItem(text, date, isCompleted) {
+    let todos = [];
+    
+    function createTodoElement(todo) {
         const todoItem = document.createElement('li');
         todoItem.className = 'todo-item';
-        if (isCompleted) {
+        todoItem.dataset.id = todo.id;
+        todoItem.draggable = true;
+        
+        if (todo.completed) {
             todoItem.classList.add('completed');
         }
         
@@ -84,15 +89,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.className = 'todo-checkbox';
-        checkbox.checked = isCompleted;
+        checkbox.checked = todo.completed;
         
         const todoText = document.createElement('span');
         todoText.className = 'todo-text';
-        todoText.textContent = text;
+        todoText.textContent = todo.text;
         
         const todoDate = document.createElement('span');
         todoDate.className = 'todo-date';
-        todoDate.textContent = date;
+        todoDate.textContent = todo.date;
         
         todoContent.append(checkbox, todoText, todoDate);
         
@@ -114,11 +119,25 @@ document.addEventListener('DOMContentLoaded', function() {
         return todoItem;
     }
     
-    todoList.append(createTodoItem('Купить продукты в магазине', '15.10.2025', false));
-    todoList.append(createTodoItem('Написать отчет по проекту', '14.10.2025', false));
-    todoList.append(createTodoItem('Позвонить врачу', '13.10.2025', true));
-    todoList.append(createTodoItem('Подготовиться к презентации', '16.10.2025', false));
-    todoList.append(createTodoItem('Сделать домашнее задание', '12.10.2025', true));
+    function renderTodos() {
+        todoList.textContent = '';
+        
+        todos.forEach(todo => {
+            const todoElement = createTodoElement(todo);
+            todoList.append(todoElement);
+        });
+        
+        console.log('Список задач отрендерен. Всего задач:', todos.length);
+    }
     
-    console.log('Тестовые задачи добавлены!');
+    todos = [
+        { id: 1, text: 'Купить продукты в магазине', date: '15.10.2025', completed: false },
+        { id: 2, text: 'Написать отчет по проекту', date: '14.10.2025', completed: false },
+        { id: 3, text: 'Позвонить врачу', date: '13.10.2025', completed: true },
+        { id: 4, text: 'Подготовиться к презентации', date: '16.10.2025', completed: false },
+        { id: 5, text: 'Сделать домашнее задание', date: '12.10.2025', completed: true }
+    ];
+    
+    renderTodos();
+    
 });
