@@ -169,6 +169,29 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Всего задач:', todos.length);
     });
     
+    function deleteTodo(todoId) {
+        const todoIndex = todos.findIndex(todo => todo.id === todoId);
+        
+        if (todoIndex !== -1) {
+            const deletedTodo = todos.splice(todoIndex, 1)[0];
+            
+            console.log('Удалена задача:', deletedTodo);
+            console.log('Осталось задач:', todos.length);
+            
+            renderTodos();
+        }
+    }
+    
+    todoList.addEventListener('click', function(event) {
+        if (event.target.classList.contains('delete-btn')) {
+            const todoItem = event.target.closest('.todo-item');
+            
+            const todoId = parseInt(todoItem.dataset.id);
+            
+            deleteTodo(todoId);
+        }
+    });
+        
     renderTodos();
     
 });
