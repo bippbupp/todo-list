@@ -73,6 +73,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let todos = [];
     let editingTodoId = null;
+    let isSorted = false;
+    let currentFilter = 'all';    
     
     function createTodoElement(todo) {
         const todoItem = document.createElement('li');
@@ -123,12 +125,28 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderTodos() {
         todoList.textContent = '';
         
-        todos.forEach(todo => {
+        let displayTodos = [...todos];
+        
+        if (currentFilter === 'active') {
+            displayTodos = displayTodos.filter(todo => !todo.completed);
+        } else if (currentFilter === 'completed') {
+            displayTodos = displayTodos.filter(todo => todo.completed);
+        }
+        
+        if (isSorted) {
+            displayTodos.sort((a, b) => {
+                const dateA = a.date.split('.').reverse().join('-');
+                const dateB = b.date.split('.').reverse().join('-');
+                return new Date(dateA) - new Date(dateB);
+            });
+        }
+        
+        displayTodos.forEach(todo => {
             const todoElement = createTodoElement(todo);
             todoList.append(todoElement);
         });
         
-        console.log('Список задач отрендерен. Всего задач:', todos.length);
+        console.log('Список задач отрендерен. Всего задач:', displayTodos.length);
     }
     
     todos = [
@@ -275,7 +293,36 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    sortButton.addEventListener('click', function() {
+        isSorted = !isSorted;
         
+        if (isSorted) {
+            sortButton.textContent = 'Отменить сортировку';
+            console.log('Задачи отсортированы по дате');
+        } else {
+            sortButton.textContent = 'Сортировать по дате';
+            console.log('Сортировка отменена');
+        }
+        
+        renderTodos();
+    });
+    
+    filterContainer.addEventListener('click', function(event) {
+        if (event.target.classList.contains('filter-btn')) {
+            currentFilter = event.target.dataset.filter;
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            event.target.classList.add('active');
+            
+            console.log('Фильтр изменен:', currentFilter);
+            renderTodos();
+        }
+    });
+    
     renderTodos();
     
 });
