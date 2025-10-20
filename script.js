@@ -72,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Структура страницы создана!');
 
     let todos = [];
+    let editingTodoId = null;
     
     function createTodoElement(todo) {
         const todoItem = document.createElement('li');
@@ -191,6 +192,64 @@ document.addEventListener('DOMContentLoaded', function() {
             renderTodos();
         }
     }
+
+    function startEditTodo(todoId) {
+        if (editingTodoId !== null) {
+            return;
+        }
+        
+        editingTodoId = todoId;
+        const todo = todos.find(todo => todo.id === todoId);
+        const todoItem = document.querySelector(`[data-id="${todoId}"]`);
+        
+        if (!todo || !todoItem) return;
+        
+        const todoText = todoItem.querySelector('.todo-text');
+        const todoDate = todoItem.querySelector('.todo-date');
+        const editBtn = todoItem.querySelector('.edit-btn');
+        
+        const textInput = document.createElement('input');
+        textInput.type = 'text';
+        textInput.className = 'todo-text edit-input';
+        textInput.value = todo.text;
+        
+        const dateInput = document.createElement('input');
+        dateInput.type = 'date';
+        dateInput.className = 'todo-date edit-input';
+        dateInput.value = todo.date.split('.').reverse().join('-');
+        
+        todoText.replaceWith(textInput);
+        todoDate.replaceWith(dateInput);
+        editBtn.textContent = 'Сохранить';
+        
+        textInput.focus();
+    }
+    
+    function saveEditTodo(todoId) {
+        const todo = todos.find(todo => todo.id === todoId);
+        const todoItem = document.querySelector(`[data-id="${todoId}"]`);
+        
+        if (!todo || !todoItem) return;
+        
+        const textInput = todoItem.querySelector('input[type="text"].edit-input');
+        const dateInput = todoItem.querySelector('input[type="date"].edit-input');
+        
+        const newText = textInput.value.trim();
+        const newDate = dateInput.value;
+        
+        if (newText === '' || newDate === '') {
+            alert('Текст и дата не могут быть пустыми!');
+            return;
+        }
+        
+        todo.text = newText;
+        todo.date = newDate.split('-').reverse().join('.');
+        
+        editingTodoId = null;
+        
+        console.log('Задача отредактирована:', todo);
+        renderTodos();
+    }
     
     todoList.addEventListener('click', function(event) {
         if (event.target.classList.contains('delete-btn')) {
@@ -205,6 +264,16 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleTodoComplete(todoId);
         }
 
+        if (event.target.classList.contains('edit-btn')) {
+            const todoItem = event.target.closest('.todo-item');
+            const todoId = parseInt(todoItem.dataset.id);
+            
+            if (editingTodoId === todoId) {
+                saveEditTodo(todoId);
+            } else {
+                startEditTodo(todoId);
+            }
+        }
     });
         
     renderTodos();
