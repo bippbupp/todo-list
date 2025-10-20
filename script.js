@@ -181,15 +181,30 @@ document.addEventListener('DOMContentLoaded', function() {
             renderTodos();
         }
     }
+
+    function toggleTodoComplete(todoId) {
+        const todo = todos.find(todo => todo.id === todoId);
+        
+        if (todo) {
+            todo.completed = !todo.completed;
+            console.log('Статус задачи изменен:', todo);
+            renderTodos();
+        }
+    }
     
     todoList.addEventListener('click', function(event) {
         if (event.target.classList.contains('delete-btn')) {
             const todoItem = event.target.closest('.todo-item');
-            
             const todoId = parseInt(todoItem.dataset.id);
-            
             deleteTodo(todoId);
         }
+
+        if (event.target.classList.contains('todo-checkbox')) {
+            const todoItem = event.target.closest('.todo-item');
+            const todoId = parseInt(todoItem.dataset.id);
+            toggleTodoComplete(todoId);
+        }
+
     });
         
     renderTodos();
