@@ -75,7 +75,38 @@ document.addEventListener('DOMContentLoaded', function() {
     let editingTodoId = null;
     let isSorted = false;
     let currentFilter = 'all';
-    let searchQuery = '';    
+    let searchQuery = '';
+    let nextId = 1;
+    
+    function saveTodosToLocalStorage() {
+        localStorage.setItem('todos', JSON.stringify(todos));
+        localStorage.setItem('nextId', nextId.toString());
+        console.log('Задачи сохранены в localStorage');
+    }
+    
+    function loadTodosFromLocalStorage() {
+        const savedTodos = localStorage.getItem('todos');
+        const savedNextId = localStorage.getItem('nextId');
+        
+        if (savedTodos) {
+            todos = JSON.parse(savedTodos);
+            console.log('Задачи загружены из localStorage:', todos.length);
+        } else {
+            todos = [
+                { id: 1, text: 'Купить продукты в магазине', date: '15.10.2025', completed: false },
+                { id: 2, text: 'Написать отчет по проекту', date: '14.10.2025', completed: false },
+                { id: 3, text: 'Позвонить врачу', date: '13.10.2025', completed: true },
+                { id: 4, text: 'Подготовиться к презентации', date: '16.10.2025', completed: false },
+                { id: 5, text: 'Сделать домашнее задание', date: '12.10.2025', completed: true }
+            ];
+            nextId = 6;
+            console.log('Загружены тестовые данные');
+        }
+        
+        if (savedNextId) {
+            nextId = parseInt(savedNextId);
+        }
+    }
     
     function createTodoElement(todo) {
         const todoItem = document.createElement('li');
@@ -156,16 +187,8 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Список задач отрендерен. Всего задач:', displayTodos.length);
     }
     
-    todos = [
-        { id: 1, text: 'Купить продукты в магазине', date: '15.10.2025', completed: false },
-        { id: 2, text: 'Написать отчет по проекту', date: '14.10.2025', completed: false },
-        { id: 3, text: 'Позвонить врачу', date: '13.10.2025', completed: true },
-        { id: 4, text: 'Подготовиться к презентации', date: '16.10.2025', completed: false },
-        { id: 5, text: 'Сделать домашнее задание', date: '12.10.2025', completed: true }
-    ];
+    loadTodosFromLocalStorage();
 
-    let nextId = 6;
-    
     form.addEventListener('submit', function(event) {
         event.preventDefault();
         
@@ -189,6 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
         taskInput.value = '';
         dateInput.value = '';
         
+        saveTodosToLocalStorage();
         renderTodos();
         
         console.log('Добавлена новая задача:', newTodo);
@@ -203,7 +227,8 @@ document.addEventListener('DOMContentLoaded', function() {
             
             console.log('Удалена задача:', deletedTodo);
             console.log('Осталось задач:', todos.length);
-            
+            saveTodosToLocalStorage();
+
             renderTodos();
         }
     }
@@ -214,6 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (todo) {
             todo.completed = !todo.completed;
             console.log('Статус задачи изменен:', todo);
+            saveTodosToLocalStorage();
             renderTodos();
         }
     }
@@ -273,6 +299,7 @@ document.addEventListener('DOMContentLoaded', function() {
         editingTodoId = null;
         
         console.log('Задача отредактирована:', todo);
+        saveTodosToLocalStorage();
         renderTodos();
     }
     
@@ -335,7 +362,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Поисковый запрос:', searchQuery);
         renderTodos();
     });
-    
+
     renderTodos();
     
 });
