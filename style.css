@@ -252,6 +252,7 @@ body {
         align-items: flex-start;
         gap: 10px;
         cursor: grab;
+        transition: all 0.3s, opacity 0.2s;
     }
     
     .todo-actions {
