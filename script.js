@@ -74,7 +74,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let todos = [];
     let editingTodoId = null;
     let isSorted = false;
-    let currentFilter = 'all';    
+    let currentFilter = 'all';
+    let searchQuery = '';    
     
     function createTodoElement(todo) {
         const todoItem = document.createElement('li');
@@ -131,6 +132,12 @@ document.addEventListener('DOMContentLoaded', function() {
             displayTodos = displayTodos.filter(todo => !todo.completed);
         } else if (currentFilter === 'completed') {
             displayTodos = displayTodos.filter(todo => todo.completed);
+        }
+
+        if (searchQuery) {
+            displayTodos = displayTodos.filter(todo => 
+                todo.text.toLowerCase().includes(searchQuery.toLowerCase())
+            );
         }
         
         if (isSorted) {
@@ -321,6 +328,12 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Фильтр изменен:', currentFilter);
             renderTodos();
         }
+    });
+    
+    searchInput.addEventListener('input', function(event) {
+        searchQuery = event.target.value.trim();
+        console.log('Поисковый запрос:', searchQuery);
+        renderTodos();
     });
     
     renderTodos();
