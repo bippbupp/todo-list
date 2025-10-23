@@ -77,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentFilter = 'all';
     let searchQuery = '';
     let nextId = 1;
+    let draggedTodoId = null;
     
     function saveTodosToLocalStorage() {
         localStorage.setItem('todos', JSON.stringify(todos));
@@ -106,6 +107,20 @@ document.addEventListener('DOMContentLoaded', function() {
         if (savedNextId) {
             nextId = parseInt(savedNextId);
         }
+    }
+
+    function reorderTodos(draggedId, targetId) {
+        const draggedIndex = todos.findIndex(todo => todo.id === draggedId);
+        const targetIndex = todos.findIndex(todo => todo.id === targetId);
+        
+        if (draggedIndex === -1 || targetIndex === -1) return;
+        
+        const draggedTodo = todos.splice(draggedIndex, 1)[0];
+        todos.splice(targetIndex, 0, draggedTodo);
+        
+        console.log('Порядок задач изменен');
+        saveTodosToLocalStorage();
+        renderTodos();
     }
     
     function createTodoElement(todo) {
@@ -362,6 +377,66 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Поисковый запрос:', searchQuery);
         renderTodos();
     });
+
+    todoList.addEventListener('dragstart', function(event) {
+        if (event.target.classList.contains('todo-item')) {
+            draggedTodoId = parseInt(event.target.dataset.id);
+            event.target.classList.add('dragging');
+            console.log('Начато перетаскивание задачи:', draggedTodoId);
+        }
+    });
+    
+    todoList.addEventListener('dragend', function(event) {
+        if (event.target.classList.contains('todo-item')) {
+            event.target.classList.remove('dragging');
+            draggedTodoId = null;
+            console.log('Перетаскивание завершено');
+        }
+    });
+    
+    todoList.addEventListener('dragover', function(event) {
+        event.preventDefault();
+        
+        const afterElement = getDragAfterElement(todoList, event.clientY);
+        const draggingElement = document.querySelector('.dragging');
+        
+        if (afterElement == null) {
+            todoList.appendChild(draggingElement);
+        } else {
+            todoList.insertBefore(draggingElement, afterElement);
+        }
+    });
+    
+    todoList.addEventListener('drop', function(event) {
+        event.preventDefault();
+        
+        if (draggedTodoId === null) return;
+        
+        const dropTarget = event.target.closest('.todo-item');
+        
+        if (dropTarget && dropTarget.dataset.id) {
+            const targetId = parseInt(dropTarget.dataset.id);
+            
+            if (draggedTodoId !== targetId) {
+                reorderTodos(draggedTodoId, targetId);
+            }
+        }
+    });
+    
+    function getDragAfterElement(container, y) {
+        const draggableElements = [...container.querySelectorAll('.todo-item:not(.dragging)')];
+        
+        return draggableElements.reduce((closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            
+            if (offset < 0 && offset > closest.offset) {
+                return { offset: offset, element: child };
+            } else {
+                return closest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
 
     renderTodos();
     

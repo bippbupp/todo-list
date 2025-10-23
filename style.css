@@ -282,3 +282,12 @@ body {
         width: 100%;
     }
 }
+
+.todo-item.dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+}
+
+.todo-item {
+    cursor: grab;
+}
