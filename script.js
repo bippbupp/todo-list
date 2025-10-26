@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     document.body.append(appContainer);
     
-    console.log('Структура страницы создана!');
+    // console.log('Структура страницы создана!');
 
     let todos = [];
     let editingTodoId = null;
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function saveTodosToLocalStorage() {
         localStorage.setItem('todos', JSON.stringify(todos));
         localStorage.setItem('nextId', nextId.toString());
-        console.log('Задачи сохранены в localStorage');
+        // console.log('Задачи сохранены в localStorage');
     }
     
     function loadTodosFromLocalStorage() {
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (savedTodos) {
             todos = JSON.parse(savedTodos);
-            console.log('Задачи загружены из localStorage:', todos.length);
+            // console.log('Задачи загружены из localStorage:', todos.length);
         } else {
             todos = [
                 { id: 1, text: 'Купить продукты в магазине', date: '15.10.2025', completed: false },
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 { id: 5, text: 'Сделать домашнее задание', date: '12.10.2025', completed: true }
             ];
             nextId = 6;
-            console.log('Загружены тестовые данные');
+            // console.log('Загружены тестовые данные');
         }
         
         if (savedNextId) {
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const draggedTodo = todos.splice(draggedIndex, 1)[0];
         todos.splice(targetIndex, 0, draggedTodo);
         
-        console.log('Порядок задач изменен');
+        // console.log('Порядок задач изменен');
         saveTodosToLocalStorage();
         renderTodos();
     }
@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function() {
             todoList.append(todoElement);
         });
         
-        console.log('Список задач отрендерен. Всего задач:', displayTodos.length);
+        // console.log('Список задач отрендерен. Всего задач:', displayTodos.length);
     }
     
     loadTodosFromLocalStorage();
@@ -230,8 +230,8 @@ document.addEventListener('DOMContentLoaded', function() {
         saveTodosToLocalStorage();
         renderTodos();
         
-        console.log('Добавлена новая задача:', newTodo);
-        console.log('Всего задач:', todos.length);
+        // console.log('Добавлена новая задача:', newTodo);
+        // console.log('Всего задач:', todos.length);
     });
     
     function deleteTodo(todoId) {
@@ -240,8 +240,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (todoIndex !== -1) {
             const deletedTodo = todos.splice(todoIndex, 1)[0];
             
-            console.log('Удалена задача:', deletedTodo);
-            console.log('Осталось задач:', todos.length);
+            // console.log('Удалена задача:', deletedTodo);
+            // console.log('Осталось задач:', todos.length);
             saveTodosToLocalStorage();
 
             renderTodos();
@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (todo) {
             todo.completed = !todo.completed;
-            console.log('Статус задачи изменен:', todo);
+            // console.log('Статус задачи изменен:', todo);
             saveTodosToLocalStorage();
             renderTodos();
         }
@@ -313,7 +313,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         editingTodoId = null;
         
-        console.log('Задача отредактирована:', todo);
+        // console.log('Задача отредактирована:', todo);
         saveTodosToLocalStorage();
         renderTodos();
     }
@@ -348,10 +348,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (isSorted) {
             sortButton.textContent = 'Отменить сортировку';
-            console.log('Задачи отсортированы по дате');
+            // console.log('Задачи отсортированы по дате');
         } else {
             sortButton.textContent = 'Сортировать по дате';
-            console.log('Сортировка отменена');
+            // console.log('Сортировка отменена');
         }
         
         renderTodos();
@@ -367,14 +367,14 @@ document.addEventListener('DOMContentLoaded', function() {
             
             event.target.classList.add('active');
             
-            console.log('Фильтр изменен:', currentFilter);
+            // console.log('Фильтр изменен:', currentFilter);
             renderTodos();
         }
     });
     
     searchInput.addEventListener('input', function(event) {
         searchQuery = event.target.value.trim();
-        console.log('Поисковый запрос:', searchQuery);
+        // console.log('Поисковый запрос:', searchQuery);
         renderTodos();
     });
 
@@ -382,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (event.target.classList.contains('todo-item')) {
             draggedTodoId = parseInt(event.target.dataset.id);
             event.target.classList.add('dragging');
-            console.log('Начато перетаскивание задачи:', draggedTodoId);
+            // console.log('Начато перетаскивание задачи:', draggedTodoId);
         }
     });
     
@@ -390,7 +390,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (event.target.classList.contains('todo-item')) {
             event.target.classList.remove('dragging');
             draggedTodoId = null;
-            console.log('Перетаскивание завершено');
+            // console.log('Перетаскивание завершено');
         }
     });
     
