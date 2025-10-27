@@ -78,6 +78,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let searchQuery = '';
     let nextId = 1;
     let draggedTodoId = null;
+    let touchStartY = 0;
+    let touchedElement = null;
+    let touchedTodoId = null;
+
     
     function saveTodosToLocalStorage() {
         localStorage.setItem('todos', JSON.stringify(todos));
@@ -438,6 +442,55 @@ document.addEventListener('DOMContentLoaded', function() {
         }, { offset: Number.NEGATIVE_INFINITY }).element;
     }
 
+    todoList.addEventListener('touchstart', function(event) {
+        const todoItem = event.target.closest('.todo-item');
+        
+        if (!todoItem) return;
+        
+        touchedElement = todoItem;
+        touchedTodoId = parseInt(todoItem.dataset.id);
+        touchStartY = event.touches[0].clientY;
+        
+        todoItem.classList.add('dragging');
+    }, { passive: false });
+    
+    todoList.addEventListener('touchmove', function(event) {
+        if (!touchedElement) return;
+        
+        event.preventDefault();
+        
+        const touch = event.touches[0];
+        const afterElement = getDragAfterElement(todoList, touch.clientY);
+        
+        if (afterElement == null) {
+            todoList.appendChild(touchedElement);
+        } else {
+            todoList.insertBefore(touchedElement, afterElement);
+        }
+    }, { passive: false });
+    
+    todoList.addEventListener('touchend', function(event) {
+        if (!touchedElement) return;
+        
+        touchedElement.classList.remove('dragging');
+        
+        const dropTarget = document.elementFromPoint(
+            event.changedTouches[0].clientX,
+            event.changedTouches[0].clientY
+        )?.closest('.todo-item');
+        
+        if (dropTarget && dropTarget.dataset.id) {
+            const targetId = parseInt(dropTarget.dataset.id);
+            
+            if (touchedTodoId !== targetId) {
+                reorderTodos(touchedTodoId, targetId);
+            }
+        }
+        
+        touchedElement = null;
+        touchedTodoId = null;
+        touchStartY = 0;
+    });
     renderTodos();
     
 });

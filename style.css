@@ -141,6 +141,9 @@ body {
     border-radius: 10px;
     transition: all 0.3s;
     cursor: grab;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .todo-item:hover {
@@ -151,6 +154,9 @@ body {
 .todo-item.dragging {
     opacity: 0.5;
     cursor: grabbing;
+    box-shadow: 0 5px 15px rgba(84, 83, 166, 0.3);
+    transform: scale(1.05);
+    z-index: 1000;
 }
 
 .todo-item.completed {
@@ -252,7 +258,7 @@ body {
         align-items: flex-start;
         gap: 10px;
         cursor: grab;
-        transition: all 0.3s, opacity 0.2s;
+        transition: all 0.3s, opacity 0.2s;        
     }
     
     .todo-actions {
